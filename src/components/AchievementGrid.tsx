@@ -8,7 +8,7 @@ interface Props {
 
 const AchievementGrid: Component<Props> = (props) => {
   return (
-    <div class="grid grid-cols-4 gap-2">
+    <div class="grid grid-cols-4 gap-2 max-w-md mx-auto">
       <For each={achievementDefs}>
         {(achievement) => (
           <AchievementTile
