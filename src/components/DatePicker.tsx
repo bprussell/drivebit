@@ -86,7 +86,7 @@ const DatePicker: Component<Props> = (props) => {
       </button>
 
       <Show when={open()}>
-        <div class="absolute z-50 mt-1 left-0 right-0 bg-[#16213E] border-2 border-primary p-3">
+        <div class="absolute z-50 mt-1 left-0 bg-[#16213E] border-2 border-primary p-3 w-[280px]">
           {/* Month/Year nav */}
           <div class="flex justify-between items-center mb-3">
             <button
@@ -118,17 +118,17 @@ const DatePicker: Component<Props> = (props) => {
           </div>
 
           {/* Day grid */}
-          <div class="grid grid-cols-7 gap-1">
+          <div class="grid grid-cols-7 gap-2">
             <For each={calendarDays()}>
               {(day) => (
                 <Show when={day !== null} fallback={<div />}>
                   <button
                     type="button"
-                    class="text-sm text-center py-1 min-h-0 border-none transition-colors"
+                    class="text-sm text-center w-8 h-8 min-h-0 p-0 border-none transition-colors mx-auto"
                     classList={{
                       "bg-primary text-[#1A1A2E] font-bold": isSelected(day!),
-                      "bg-transparent text-gray-300 hover:bg-[#1A1A2E]": !isSelected(day!),
-                      "border-b-2 border-b-accent": isToday(day!) && !isSelected(day!),
+                      "bg-transparent text-gray-300 hover:bg-[#1A1A2E]": !isSelected(day!) && !isToday(day!),
+                      "bg-transparent text-accent": isToday(day!) && !isSelected(day!),
                     }}
                     onClick={() => selectDay(day!)}
                   >
