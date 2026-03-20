@@ -1,6 +1,6 @@
 # DriveBit
 
-A retro game-themed PWA for teen drivers to log supervised driving hours and track progress toward state permit requirements. Makes the boring part of learning to drive actually fun.
+A retro game-themed web app for teen drivers to log supervised driving hours and track progress toward state permit requirements. Makes the boring part of learning to drive actually fun.
 
 ## What It Does
 
@@ -24,14 +24,11 @@ Requires **Node.js 18+**.
 
 Open [http://localhost:3000](http://localhost:3000) in your browser. Works best at mobile width — try Chrome DevTools device toolbar at 375px.
 
-## PWA
-
-DriveBit is installable as a Progressive Web App. On Chrome, look for the install icon in the address bar. All data is stored in localStorage — no account or backend required.
-
 ## Built With
 
 - [SolidJS](https://docs.solidjs.com/) — reactive UI framework
 - [TypeScript](https://www.typescriptlang.org/) — type safety
 - [UnoCSS](https://unocss.dev/) — on-demand utility CSS
-- [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) — progressive web app support
 - [Vite](https://vitejs.dev/) — build tool
+
+All data is stored in localStorage — no account or backend required.
