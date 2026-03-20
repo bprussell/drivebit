@@ -1,61 +1,50 @@
-import type { Component } from "solid-js";
-import { profile, setProfile } from "./store/profile";
-import {
-  drives,
-  addDrive,
-  totalDayMinutes,
-  totalNightMinutes,
-  totalMinutes,
-} from "./store/drives";
+import { Component, Show } from "solid-js";
+import { Router, Route, Navigate, useLocation } from "@solidjs/router";
+import { profile } from "./store/profile";
+import NavBar from "./components/NavBar";
+import Onboarding from "./pages/Onboarding";
+import Dashboard from "./pages/Dashboard";
+import History from "./pages/History";
+import Achievements from "./pages/Achievements";
+import Report from "./pages/Report";
 
-const App: Component = () => {
-  const handleSetProfile = () => {
-    setProfile({ name: "Sarah", overallTarget: 50, nightTarget: 10 });
-  };
-
-  const handleAddDrive = () => {
-    addDrive({
-      id: Date.now().toString(),
-      date: new Date().toISOString().split("T")[0],
-      dayMinutes: 30,
-      nightMinutes: 15,
-      comment: "Test drive",
-      createdAt: Date.now(),
-    });
-  };
+const Layout: Component<{ children?: any }> = (props) => {
+  const location = useLocation();
+  const isOnboarding = () => location.pathname === "/onboarding";
 
   return (
-    <div class="min-h-screen flex items-center justify-center p-4">
-      <div class="text-center">
-        <h1 class="font-pixel text-primary text-xl mb-4">DriveBit</h1>
-        <p class="text-gray-400 mb-4">Store Layer Test</p>
+    <>
+      {props.children}
+      <Show when={!isOnboarding()}>
+        <NavBar />
+      </Show>
+    </>
+  );
+};
 
-        <div class="mb-4">
-          <p class="text-sm text-gray-300 mb-2">
-            Profile: {profile() ? profile()!.name : "None"}
-          </p>
-          <button
-            class="px-4 py-2 border-2 border-primary text-primary font-pixel text-xs mr-2"
-            onClick={handleSetProfile}
-          >
-            Set Profile
-          </button>
-        </div>
+const GuardedRoute: Component<{ component: Component }> = (props) => {
+  if (!profile()) {
+    return <Navigate href="/onboarding" />;
+  }
+  return <props.component />;
+};
 
-        <div class="mb-4">
-          <p class="text-sm text-gray-300 mb-2">
-            Drives: {drives().length} | Day: {totalDayMinutes()}m | Night:{" "}
-            {totalNightMinutes()}m | Total: {totalMinutes()}m
-          </p>
-          <button
-            class="px-4 py-2 border-2 border-accent text-accent font-pixel text-xs"
-            onClick={handleAddDrive}
-          >
-            Add Drive
-          </button>
-        </div>
-      </div>
-    </div>
+const GuardedOnboarding: Component = () => {
+  if (profile()) {
+    return <Navigate href="/" />;
+  }
+  return <Onboarding />;
+};
+
+const App: Component = () => {
+  return (
+    <Router root={Layout}>
+      <Route path="/onboarding" component={GuardedOnboarding} />
+      <Route path="/" component={() => <GuardedRoute component={Dashboard} />} />
+      <Route path="/history" component={() => <GuardedRoute component={History} />} />
+      <Route path="/achievements" component={() => <GuardedRoute component={Achievements} />} />
+      <Route path="/report" component={() => <GuardedRoute component={Report} />} />
+    </Router>
   );
 };
 
