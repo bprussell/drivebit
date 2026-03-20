@@ -5,6 +5,7 @@ import type { Drive } from "../types";
 
 const History: Component = () => {
   const [editingId, setEditingId] = createSignal<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = createSignal<string | null>(null);
 
   const sortedDrives = () =>
     [...drives()].sort((a, b) => b.date.localeCompare(a.date));
@@ -24,11 +25,17 @@ const History: Component = () => {
     setEditingId(null);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Are you sure? This can't be undone.")) {
+  const handleDeleteRequest = (id: string) => {
+    setDeleteTarget(id);
+  };
+
+  const confirmDelete = () => {
+    const id = deleteTarget();
+    if (id) {
       deleteDrive(id);
       setEditingId(null);
     }
+    setDeleteTarget(null);
   };
 
   return (
@@ -86,12 +93,44 @@ const History: Component = () => {
                   <DriveForm
                     drive={drive}
                     onSave={handleSave}
-                    onDelete={() => handleDelete(drive.id)}
+                    onDelete={() => handleDeleteRequest(drive.id)}
                   />
                 </div>
               </Show>
             )}
           </For>
+        </div>
+      </Show>
+
+      {/* Custom delete confirmation modal */}
+      <Show when={deleteTarget()}>
+        <div
+          class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-100 p-4"
+          onClick={() => setDeleteTarget(null)}
+        >
+          <div
+            class="bg-[#16213E] border-2 border-accent p-6 max-w-sm w-full text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p class="font-pixel text-accent text-sm mb-2">⚠️ Delete Drive</p>
+            <p class="text-gray-300 text-sm mb-6">
+              Are you sure? This can't be undone.
+            </p>
+            <div class="flex gap-3">
+              <button
+                class="flex-1 bg-transparent border-gray-500 text-gray-300"
+                onClick={() => setDeleteTarget(null)}
+              >
+                Cancel
+              </button>
+              <button
+                class="flex-1 bg-accent border-accent text-[#1A1A2E]"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       </Show>
     </div>
