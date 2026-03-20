@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-pixel {
+  font-family: "Press Start 2P", cursive;
+}
+
+/* Retro-styled inputs */
+input,
+textarea,
+select {
+  background-color: #16213e;
+  color: #e0e0e0;
+  border: 2px solid #4caf50;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  min-height: 44px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 0 1px #ff5722;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  font-family: "Press Start 2P", cursive;
+  cursor: pointer;
+  min-height: 44px;
+  border: 2px solid;
+  padding: 12px 24px;
+  font-size: 12px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #16213e;
+  border: 1px solid #4caf50;
+}
