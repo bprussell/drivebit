@@ -1,7 +1,9 @@
 import { Component, Show } from "solid-js";
 import { Router, Route, Navigate, useLocation } from "@solidjs/router";
 import { profile } from "./store/profile";
+import { currentPopup, dismissPopup } from "./store/popupQueue";
 import NavBar from "./components/NavBar";
+import AchievementPopup from "./components/AchievementPopup";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
@@ -17,6 +19,14 @@ const Layout: Component<{ children?: any }> = (props) => {
       {props.children}
       <Show when={!isOnboarding()}>
         <NavBar />
+      </Show>
+      <Show when={currentPopup()}>
+        {(achievement) => (
+          <AchievementPopup
+            achievement={achievement()}
+            onDismiss={dismissPopup}
+          />
+        )}
       </Show>
     </>
   );

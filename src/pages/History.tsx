@@ -1,5 +1,7 @@
 import { Component, For, Show, createSignal } from "solid-js";
 import { drives, updateDrive, deleteDrive } from "../store/drives";
+import { earnedAchievements } from "../store/achievements";
+import { checkForNewAchievements } from "../store/popupQueue";
 import DriveForm from "../components/DriveForm";
 import type { Drive } from "../types";
 
@@ -16,12 +18,14 @@ const History: Component = () => {
   };
 
   const handleSave = (drive: Drive) => {
+    const before = new Set(earnedAchievements());
     updateDrive(drive.id, {
       date: drive.date,
       dayMinutes: drive.dayMinutes,
       nightMinutes: drive.nightMinutes,
       comment: drive.comment,
     });
+    checkForNewAchievements(before);
     setEditingId(null);
   };
 

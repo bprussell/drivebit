@@ -1,6 +1,8 @@
 import type { Component } from "solid-js";
 import { profile } from "../store/profile";
 import { addDrive, totalDayMinutes, totalNightMinutes, totalMinutes } from "../store/drives";
+import { earnedAchievements } from "../store/achievements";
+import { checkForNewAchievements } from "../store/popupQueue";
 import PixelProgressBar from "../components/PixelProgressBar";
 import DriveForm from "../components/DriveForm";
 import type { Drive } from "../types";
@@ -9,7 +11,9 @@ const Dashboard: Component = () => {
   const p = () => profile()!;
 
   const handleSave = (drive: Drive) => {
+    const before = new Set(earnedAchievements());
     addDrive(drive);
+    checkForNewAchievements(before);
   };
 
   return (
