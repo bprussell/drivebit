@@ -1,5 +1,6 @@
 import { Component, createSignal, Show } from "solid-js";
 import type { Drive } from "../types";
+import DatePicker from "./DatePicker";
 
 interface Props {
   drive?: Drive;
@@ -48,11 +49,7 @@ const DriveForm: Component<Props> = (props) => {
     <form onSubmit={handleSubmit}>
       <div class="mb-4">
         <label class="font-pixel text-[10px] text-gray-300 block mb-2">Date</label>
-        <input
-          type="date"
-          value={date()}
-          onInput={(e) => setDate(e.currentTarget.value)}
-        />
+        <DatePicker value={date()} onChange={setDate} />
       </div>
 
       <div class="flex gap-4 mb-4">
